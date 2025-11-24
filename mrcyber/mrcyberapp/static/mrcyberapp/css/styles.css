@@ -1,0 +1,611 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --bg-main: #050510;
+    --text-main: #f5f5ff;
+    --accent-blue: #3b82f6;
+    --accent-red: #f97373;
+    --accent-soft: rgba(148, 163, 184, 0.7);
+    --glass: rgba(15, 23, 42, 0.7);
+    --border-glow: rgba(59, 130, 246, 0.4);
+    --radius-xl: 24px;
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Inter", sans-serif;
+    background: radial-gradient(circle at top left, #0f172a, #020617);
+    color: var(--text-main);
+    min-height: 100vh;
+}
+
+/* NAVBAR */
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    padding: 0 5vw;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* LOGO solda, actions sağa itələnəcək */
+    gap: 1.5rem;
+    backdrop-filter: blur(18px);
+    background: linear-gradient(
+        to bottom,
+        rgba(15, 23, 42, 0.9),
+        rgba(15, 23, 42, 0.2)
+    );
+    border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+    z-index: 50;
+}
+
+.navbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.logo-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: radial-gradient(circle, var(--accent-blue), #22c55e);
+    box-shadow: 0 0 12px rgba(34, 197, 94, 0.8);
+}
+
+.logo-text {
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 0.86rem;
+    color: #e5e7eb;
+}
+
+.logo-text span {
+    color: var(--accent-blue);
+}
+
+.navbar-links {
+    display: flex;
+    gap: 1.2rem;
+    font-size: 0.9rem;
+    margin-left: 2rem; /* logo ilə Home arasında az boşluq */
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #9ca3af;
+    position: relative;
+    padding-bottom: 2px;
+    transition: color 0.2s ease;
+}
+
+.nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--accent-blue), var(--accent-red));
+    transition: width 0.2s ease;
+}
+
+.nav-link:hover {
+    color: #e5e7eb;
+}
+
+.nav-link.active::after {
+    width: 100%;
+}
+
+/* NAVBAR – sağ tərəf (GitHub / LinkedIn / Contact) */
+
+.navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-left: auto; /* BÜTÜN BUTTONLAR SAĞ KÜNCƏ GEDİR */
+}
+
+/* GitHub / LinkedIn – loqo + tam ad */
+
+.nav-social {
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 184, 0.45);
+    background: rgba(15, 23, 42, 0.8);
+    padding: 0.25rem 0.7rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    backdrop-filter: blur(12px);
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.18s ease,
+        background 0.2s ease;
+}
+
+.nav-social-icon {
+    width: 20px;
+    height: 20px;
+    display: block;
+    object-fit: contain;           /* png logo deformasiyasız otursun */
+    flex-shrink: 0;
+    border-radius: 999px;          /* dairəvi effekt (əgər png şəffaf fondadırsa) */
+    background-color: #ffffff;     /* 🔵 BURANI AĞ ETDİK */
+    padding: 2px;                  /* logonu içəridə azca boşluqla göstərir */
+}
+
+.nav-social-label {
+    font-size: 0.78rem;
+    color: #e5e7eb;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.nav-social:hover {
+    border-color: rgba(59, 130, 246, 0.9);
+    box-shadow: 0 0 14px rgba(59, 130, 246, 0.8);
+    transform: translateY(-1px) scale(1.02);
+    background: radial-gradient(
+        circle at top,
+        rgba(37, 99, 235, 0.4),
+        rgba(15, 23, 42, 0.95)
+    );
+}
+
+/* CONTACT düyməsi + qarmon panel */
+
+.contact-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-contact-button {
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 184, 0.5);
+    padding: 0.4rem 0.9rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    cursor: pointer;
+    background: radial-gradient(
+        circle at top left,
+        rgba(59, 130, 246, 0.7),
+        rgba(248, 113, 113, 0.8)
+    );
+    color: #e5e7eb;
+    box-shadow:
+        0 0 18px rgba(59, 130, 246, 0.7),
+        0 0 18px rgba(248, 113, 113, 0.5);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(18px);
+    transition: transform 0.18s ease, box-shadow 0.2s ease;
+}
+
+.nav-contact-button span {
+    position: relative;
+    z-index: 2;
+}
+
+.nav-contact-button:hover {
+    transform: translateY(-1px);
+    box-shadow:
+        0 0 24px rgba(59, 130, 246, 0.9),
+        0 0 24px rgba(248, 113, 113, 0.9);
+}
+
+/* Açılan panel (qramon) – default bağlı */
+
+.contact-panel {
+    position: absolute;
+    top: 115%;
+    right: 0;
+    width: 210px;
+    padding: 0.45rem;
+    border-radius: 16px;
+    background: radial-gradient(
+            circle at top left,
+            rgba(59, 130, 246, 0.18),
+            transparent 55%
+        ),
+        rgba(15, 23, 42, 0.95);
+    border: 1px solid rgba(148, 163, 184, 0.5);
+    box-shadow:
+        0 18px 35px rgba(15, 23, 42, 0.9),
+        0 0 0 1px rgba(15, 23, 42, 0.9);
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    opacity: 0;
+    transform: translateY(6px) scale(0.97);
+    pointer-events: none;
+    transition:
+        opacity 0.22s ease,
+        transform 0.22s ease;
+    z-index: 60;
+}
+
+/* JS ilə qoyulan .is-open klası paneli açır */
+.contact-wrapper.is-open .contact-panel {
+    opacity: 1;
+    transform: translateY(10px) scale(1);
+    pointer-events: auto;
+}
+
+/* Eyni zamanda mouse contact üzərində olanda da açılsın – fallback */
+.contact-wrapper:hover .contact-panel {
+    opacity: 1;
+    transform: translateY(10px) scale(1);
+    pointer-events: auto;
+}
+
+/* Panel içində hər sıra (Instagram / TikTok / Telegram) */
+
+.contact-row {
+    width: 100%;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    background: transparent;
+    padding: 0.35rem 0.55rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition:
+        background 0.18s ease,
+        border-color 0.18s ease,
+        transform 0.16s ease,
+        box-shadow 0.18s ease;
+}
+
+.contact-row-icon {
+    width: 22px;
+    height: 22px;
+    display: block;
+    object-fit: contain;
+    flex-shrink: 0;
+    border-radius: 999px;
+    background-color: #ffffff;  /* 🔵 BURANI DA AĞ ETDİK */
+    padding: 2px;
+}
+
+.contact-row-label {
+    font-size: 0.8rem;
+    color: #e5e7eb;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+/* Fərqli platformalar üçün hover rəngləri */
+
+.contact-row--ig:hover {
+    background: radial-gradient(
+        circle at 30% 20%,
+        rgba(253, 244, 151, 0.28),
+        rgba(214, 36, 159, 0.4)
+    );
+    border-color: rgba(214, 36, 159, 0.8);
+    box-shadow: 0 0 14px rgba(214, 36, 159, 0.7);
+    transform: translateX(-1px);
+}
+
+.contact-row--tt:hover {
+    background: radial-gradient(
+        circle at 30% 10%,
+        rgba(0, 242, 234, 0.3),
+        rgba(0, 0, 0, 0.8)
+    );
+    border-color: rgba(0, 242, 234, 0.8);
+    box-shadow: 0 0 14px rgba(0, 242, 234, 0.7);
+    transform: translateX(-1px);
+}
+
+.contact-row--tg:hover {
+    background: radial-gradient(
+        circle at 30% 20%,
+        rgba(42, 171, 238, 0.32),
+        rgba(1, 87, 155, 0.7)
+    );
+    border-color: rgba(42, 171, 238, 0.9);
+    box-shadow: 0 0 14px rgba(42, 171, 238, 0.7);
+    transform: translateX(-1px);
+}
+
+/* HERO / CAROUSEL */
+
+.hero {
+    position: relative;
+    height: 100vh;
+    padding: 0 5vw;
+    padding-top: 64px; /* navbar hündürlüyü */
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Background grid */
+
+.hero-background-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+        radial-gradient(circle at 10% 20%, rgba(37, 99, 235, 0.36), transparent 55%),
+        radial-gradient(circle at 80% 0%, rgba(239, 68, 68, 0.32), transparent 50%),
+        linear-gradient(
+            to bottom,
+            rgba(15, 23, 42, 0.8),
+            rgba(2, 6, 23, 0.96)
+        );
+    opacity: 0.85;
+    z-index: -2;
+}
+
+.hero-slide {
+    position: absolute;
+    inset: 0;
+    padding: 0 5vw;
+    padding-top: 80px;
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    align-items: center;
+    gap: 2rem;
+    opacity: 0;
+    transform: translateX(5%);
+    pointer-events: none;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.hero-slide.active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+}
+
+.hero-content {
+    max-width: 540px;
+    padding: 1.5rem 1.8rem;
+    border-radius: var(--radius-xl);
+    background: radial-gradient(
+            circle at top left,
+            rgba(59, 130, 246, 0.28),
+            transparent 55%
+        ),
+        radial-gradient(
+            circle at bottom right,
+            rgba(248, 113, 113, 0.2),
+            transparent 60%
+        ),
+        var(--glass);
+    border: 1px solid rgba(148, 163, 184, 0.4);
+    box-shadow:
+        0 18px 45px rgba(15, 23, 42, 0.8),
+        0 0 0 1px var(--border-glow);
+}
+
+.hero-kicker {
+    font-size: 0.8rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent-soft);
+    margin-bottom: 0.8rem;
+}
+
+.hero-title {
+    font-size: clamp(2.4rem, 4vw, 3.4rem);
+    line-height: 1.05;
+    letter-spacing: 0.03em;
+    margin-bottom: 0.8rem;
+}
+
+.hero-title span {
+    background: linear-gradient(120deg, var(--accent-blue), var(--accent-red));
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.hero-subtitle {
+    font-size: 0.98rem;
+    color: #cbd5f5;
+    max-width: 480px;
+}
+
+/* FACE BLOB + FOTO */
+
+.hero-face {
+    position: relative;
+    justify-self: flex-end;
+    margin-right: 2vw;
+    width: 260px;
+    height: 260px;
+    border-radius: 999px;
+    overflow: hidden;
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(148, 163, 184, 0.4);
+    box-shadow:
+        0 24px 60px rgba(15, 23, 42, 0.9),
+        0 0 40px rgba(59, 130, 246, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-face--right {
+    align-self: flex-start;
+    margin-top: 6vh;
+}
+
+/* FOTO dairəni tam doldurur */
+.hero-face-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.9;
+    filter: saturate(1.05) contrast(1.05);
+    z-index: 1;
+}
+
+/* Rəng overlay + effektlər */
+
+.hero-face::before,
+.hero-face::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+}
+
+.hero-face--blue::before {
+    background: linear-gradient(
+        135deg,
+        rgba(15, 23, 42, 0.0) 0%,
+        rgba(15, 23, 42, 0.4) 35%,
+        rgba(59, 130, 246, 0.5) 70%,
+        rgba(59, 130, 246, 0.9) 100%
+    );
+    mix-blend-mode: soft-light;
+}
+
+.hero-face--red::before {
+    background: linear-gradient(
+        135deg,
+        rgba(15, 23, 42, 0.0) 0%,
+        rgba(15, 23, 42, 0.4) 35%,
+        rgba(248, 113, 113, 0.5) 70%,
+        rgba(248, 113, 113, 0.95) 100%
+    );
+    mix-blend-mode: soft-light;
+}
+
+/* “Yarım üz” effekti – soldan bir az qaranlıq */
+
+.hero-face::after {
+    background: radial-gradient(
+        circle at 120% 50%,
+        rgba(15, 23, 42, 0.0) 0%,
+        rgba(15, 23, 42, 0.0) 40%,
+        rgba(15, 23, 42, 0.95) 80%
+    );
+}
+
+.hero-face-label {
+    position: relative;
+    z-index: 3;
+    font-size: 0.75rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(226, 232, 240, 0.8);
+    padding: 0.35rem 0.9rem;
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 184, 0.6);
+    background-color: rgba(15, 23, 42, 0.75);
+}
+
+/* İkinci slaydda üz bir az daha sağda */
+
+.hero-face--shifted {
+    transform: translateX(40px);
+}
+
+/* Carousel düymələri */
+
+.hero-controls {
+    position: absolute;
+    right: 5vw;
+    bottom: 4vh;
+    display: flex;
+    gap: 0.6rem;
+    z-index: 5;
+}
+
+.hero-dot {
+    border: 1px solid rgba(148, 163, 184, 0.4);
+    border-radius: 999px;
+    padding: 0.35rem 0.9rem;
+    background: rgba(15, 23, 42, 0.8);
+    color: #9ca3af;
+    font-size: 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.hero-dot span {
+    font-size: 0.7rem;
+    opacity: 0.7;
+}
+
+/* Burda səndə kiçik typo var idi, düzəltdim */
+.hero-dot.active,
+.hero-dot:hover {
+    color: #e5e7eb;
+    border-color: rgba(59, 130, 246, 0.9);
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.7);
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+    .navbar {
+        padding: 0 4vw;
+    }
+
+    .navbar-links {
+        display: none; /* istəsən sonra mobil menyu edərik */
+    }
+
+    .hero-slide {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: auto auto;
+        padding-top: 96px;
+    }
+
+    .hero-face {
+        justify-self: center;
+        margin-right: 0;
+        margin-top: 2rem;
+        width: 220px;
+        height: 220px;
+    }
+
+    .hero-face--shifted {
+        transform: translateX(0);
+    }
+
+    .hero-controls {
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+    }
+}
+
+@media (max-width: 600px) {
+    .hero-content {
+        padding: 1.2rem 1.4rem;
+    }
+
+    .hero-title {
+        font-size: 2rem;
+    }
+}

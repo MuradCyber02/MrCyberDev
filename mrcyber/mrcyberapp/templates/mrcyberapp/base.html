@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MuradCyber – Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="{% static 'mrcyberapp/css/styles.css' %}" rel="stylesheet">
+    <script defer src="{% static 'mrcyberapp/js/main.js' %}"></script>
+</head>
+<body>
+    <header class="navbar">
+        <div class="navbar-logo">
+            <span class="logo-dot"></span>
+            <span class="logo-text">Murad<span>Cyber</span></span>
+        </div>
+
+        <nav class="navbar-links">
+            <a href="{% url 'home' %}" class="nav-link active">Home</a>
+            <!-- Sonra buraya Projects, Blog və s. əlavə edəcəyik -->
+        </nav>
+
+        <div class="navbar-actions">
+            <!-- GitHub -->
+            <button class="nav-social" type="button" aria-label="GitHub">
+                <img src="{% static 'mrcyberapp/img/githubb.png' %}" alt="" class="nav-social-icon">
+                <span class="nav-social-label">GitHub</span>
+            </button>
+
+            <!-- LinkedIn -->
+            <button class="nav-social" type="button" aria-label="LinkedIn">
+                <img src="{% static 'mrcyberapp/img/linkedinn.png' %}" alt="" class="nav-social-icon">
+                <span class="nav-social-label">LinkedIn</span>
+            </button>
+
+            <!-- Contact + açılan sosial panel -->
+            <div class="contact-wrapper">
+                <button class="nav-contact-button" type="button">
+                    <span>Contact</span>
+                </button>
+
+                <!-- Hover-da açılan qarmon panel -->
+                <div class="contact-panel">
+                    <button class="contact-row contact-row--ig" type="button" aria-label="Instagram">
+                        <img src="{% static 'mrcyberapp/img/instagramm.png' %}" alt="" class="contact-row-icon">
+                        <span class="contact-row-label">Instagram</span>
+                    </button>
+
+                    <button class="contact-row contact-row--tt" type="button" aria-label="TikTok">
+                        <img src="{% static 'mrcyberapp/img/tiktokk.png' %}" alt="" class="contact-row-icon">
+                        <span class="contact-row-label">TikTok</span>
+                    </button>
+
+                    <button class="contact-row contact-row--tg" type="button" aria-label="Telegram">
+                        <img src="{% static 'mrcyberapp/img/telegramm.png' %}" alt="" class="contact-row-icon">
+                        <span class="contact-row-label">Telegram</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

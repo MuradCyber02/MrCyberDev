@@ -1,0 +1,61 @@
+{% extends 'mrcyberapp/base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-background-grid"></div>
+
+    <!-- Slide 1: Software Engineer (mavi ton) -->
+    <div class="hero-slide hero-slide--software active" data-slide="0">
+        <div class="hero-content">
+            <p class="hero-kicker">Hybrid Engineer</p>
+            <h1 class="hero-title">
+                Software <span>Engineer</span>
+            </h1>
+            <p class="hero-subtitle">
+                Clean code, scalable systems, modern web & backend architectures.
+            </p>
+        </div>
+
+        <!-- Üzün sağ yarısı – ekranda sağ yuxarı küncdə -->
+        <div class="hero-face hero-face--right hero-face--blue">
+            <!-- Sənin foton – dairənin içini tam doldurur -->
+            <img src="{% static 'mrcyberapp/img/mrcyber.jpg' %}"
+                 alt="MuradCyber portrait"
+                 class="hero-face-img">
+            <span class="hero-face-label">Software</span>
+        </div>
+    </div>
+
+    <!-- Slide 2: Cyber Security (qırmızı ton) -->
+    <div class="hero-slide hero-slide--cyber" data-slide="1">
+        <div class="hero-content">
+            <p class="hero-kicker">Security First</p>
+            <h1 class="hero-title">
+                Cyber <span>Security</span>
+            </h1>
+            <p class="hero-subtitle">
+                Threat hunting, hardening, offensive & defensive security mindset.
+            </p>
+        </div>
+
+        <!-- Üz sağ küncdən çıxır – daha çox sağ-a sürüşmüş hiss kimi -->
+        <div class="hero-face hero-face--right hero-face--red hero-face--shifted">
+            <img src="{% static 'mrcyberapp/img/mrcyber.jpg' %}"
+                 alt="MuradCyber security portrait"
+                 class="hero-face-img">
+            <span class="hero-face-label">Security</span>
+        </div>
+    </div>
+
+    <!-- Carousel kontrolu (aşağı sağ küncdə) -->
+    <div class="hero-controls">
+        <button class="hero-dot active" data-target="0">
+            <span>01</span> Software
+        </button>
+        <button class="hero-dot" data-target="1">
+            <span>02</span> Security
+        </button>
+    </div>
+</section>
+{% endblock %}
