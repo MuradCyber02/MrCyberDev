@@ -71,4 +71,96 @@ document.addEventListener("DOMContentLoaded", () => {
             contactWrapper.classList.remove("is-open");
         });
     }
+
+    /* =========================
+       TYPING EFFECT – "Hi, I'm Murad Kerimov" (sonsuz döngü)
+    ========================== */
+    const typedEl = document.getElementById("typed-intro");
+    if (typedEl) {
+        const text = "Hi, I'm Murad Kerimov";
+        let index = 0;
+        const speed = 90;      // hər hərf üçün müddət (ms)
+        const holdTime = 1500; // tam yazıldıqdan sonra gözləmə (ms)
+        const clearTime = 400; // sildikdən sonra yenidən başlamazdan əvvəl gözləmə
+
+        const typeLoop = () => {
+            if (index <= text.length) {
+                // Yazma mərhələsi
+                typedEl.textContent = text.slice(0, index);
+                index += 1;
+                setTimeout(typeLoop, speed);
+            } else {
+                // Tam yazılıb – bir az gözləyək, sonra silək
+                setTimeout(() => {
+                    typedEl.textContent = "";
+                    index = 0;
+                    setTimeout(typeLoop, clearTime);
+                }, holdTime);
+            }
+        };
+
+        typeLoop();
+    }
+
+    /* =========================
+       GITHUB REPOS – son repolar
+    ========================== */
+    initGithubRepos();
 });
+
+/* =======================================
+   GitHub API – latest repositories
+======================================= */
+
+function initGithubRepos() {
+    const listEl = document.getElementById("github-repo-list");
+    if (!listEl) return;
+
+    const USERNAME = "MuradCyber02"; // lazım olsa burada username-i dəyişə bilərsən
+
+    fetch(`https://api.github.com/users/${USERNAME}/repos?sort=updated&per_page=6`)
+        .then((res) => {
+            if (!res.ok) {
+                throw new Error("GitHub API error");
+            }
+            return res.json();
+        })
+        .then((repos) => {
+            listEl.innerHTML = "";
+
+            if (!repos || !repos.length) {
+                listEl.innerHTML =
+                    '<p class="github-repo-error">No public repositories found yet.</p>';
+                return;
+            }
+
+            repos.forEach((repo) => {
+                const card = document.createElement("a");
+                card.href = repo.html_url;
+                card.target = "_blank";
+                card.rel = "noopener noreferrer";
+                card.className = "github-repo-card";
+
+                const desc =
+                    repo.description && repo.description.trim().length
+                        ? repo.description
+                        : "No description provided.";
+
+                card.innerHTML = `
+                    <h4 class="github-repo-name">${repo.name}</h4>
+                    <p class="github-repo-desc">${desc}</p>
+                    <div class="github-repo-meta">
+                        <span>${repo.language || "Unknown"}</span>
+                        <span>★ ${repo.stargazers_count}</span>
+                    </div>
+                `;
+
+                listEl.appendChild(card);
+            });
+        })
+        .catch((err) => {
+            console.error("GitHub repos load error:", err);
+            listEl.innerHTML =
+                '<p class="github-repo-error">Couldn’t load GitHub activity right now.</p>';
+        });
+}

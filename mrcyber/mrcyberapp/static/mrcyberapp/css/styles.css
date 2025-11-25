@@ -17,6 +17,11 @@
     --radius-xl: 24px;
 }
 
+/* Anchor link-lər üçün smooth scroll */
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
         "Inter", sans-serif;
@@ -36,7 +41,7 @@ body {
     padding: 0 5vw;
     display: flex;
     align-items: center;
-    justify-content: flex-start; /* LOGO solda, actions sağa itələnəcək */
+    justify-content: flex-start;
     gap: 1.5rem;
     backdrop-filter: blur(18px);
     background: linear-gradient(
@@ -54,12 +59,71 @@ body {
     gap: 0.6rem;
 }
 
+/* =========================
+   LOGO DOT – CYBER ANİMASİYA
+   ========================= */
 .logo-dot {
-    width: 10px;
-    height: 10px;
+    position: relative;
+    width: 14px;
+    height: 14px;
     border-radius: 999px;
-    background: radial-gradient(circle, var(--accent-blue), #22c55e);
-    box-shadow: 0 0 12px rgba(34, 197, 94, 0.8);
+    background: radial-gradient(circle at 30% 30%, #4ade80, #22c55e 45%, #0ea5e9 100%);
+    box-shadow:
+        0 0 10px rgba(34, 197, 94, 0.9),
+        0 0 18px rgba(56, 189, 248, 0.75);
+}
+
+/* Orbit edən qırıqlı halqa */
+.logo-dot::before {
+    content: "";
+    position: absolute;
+    inset: -5px;
+    border-radius: 999px;
+    border: 2px dashed rgba(56, 189, 248, 0.85);
+    border-top-color: transparent; /* halqada qırıq effekt */
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.6);
+    animation: logo-orbit 3.4s linear infinite;
+}
+
+/* Yüngül nəfəs alan glow */
+.logo-dot::after {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 999px;
+    background: radial-gradient(
+        circle,
+        rgba(56, 189, 248, 0.45),
+        rgba(15, 23, 42, 0)
+    );
+    opacity: 0.7;
+    mix-blend-mode: screen;
+    animation: logo-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes logo-orbit {
+    0% {
+        transform: rotate(0deg);
+        opacity: 0.9;
+    }
+    50% {
+        opacity: 0.6;
+    }
+    100% {
+        transform: rotate(360deg);
+        opacity: 0.9;
+    }
+}
+
+@keyframes logo-pulse {
+    0%, 100% {
+        transform: scale(0.9);
+        opacity: 0.45;
+    }
+    50% {
+        transform: scale(1.18);
+        opacity: 1;
+    }
 }
 
 .logo-text {
@@ -78,7 +142,7 @@ body {
     display: flex;
     gap: 1.2rem;
     font-size: 0.9rem;
-    margin-left: 2rem; /* logo ilə Home arasında az boşluq */
+    margin-left: 2rem;
 }
 
 .nav-link {
@@ -115,8 +179,59 @@ body {
     display: flex;
     align-items: center;
     gap: 0.6rem;
-    margin-left: auto; /* BÜTÜN BUTTONLAR SAĞ KÜNCƏ GEDİR */
+    margin-left: auto;
 }
+
+
+/* DOWNLOAD CV düyməsi */
+
+.nav-download {
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 184, 0.6);
+    padding: 0.4rem 1.1rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    background: radial-gradient(
+        circle at top left,
+        rgba(59, 130, 246, 0.9),
+        rgba(16, 185, 129, 0.9)
+    );
+    color: #e5e7eb;
+    box-shadow:
+        0 0 18px rgba(59, 130, 246, 0.7),
+        0 0 18px rgba(16, 185, 129, 0.6);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(18px);
+    transition:
+        transform 0.18s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease;
+}
+
+.nav-download span {
+    position: relative;
+    z-index: 2;
+}
+
+.nav-download:hover {
+    transform: translateY(-1px);
+    border-color: rgba(59, 130, 246, 0.95);
+    box-shadow:
+        0 0 24px rgba(59, 130, 246, 0.95),
+        0 0 24px rgba(16, 185, 129, 0.9);
+    background: radial-gradient(
+        circle at top left,
+        rgba(59, 130, 246, 1),
+        rgba(22, 163, 74, 1)
+    );
+}
+
 
 /* GitHub / LinkedIn – loqo + tam ad */
 
@@ -141,11 +256,11 @@ body {
     width: 20px;
     height: 20px;
     display: block;
-    object-fit: contain;           /* png logo deformasiyasız otursun */
+    object-fit: contain;
     flex-shrink: 0;
-    border-radius: 999px;          /* dairəvi effekt (əgər png şəffaf fondadırsa) */
-    background-color: #ffffff;     /* 🔵 BURANI AĞ ETDİK */
-    padding: 2px;                  /* logonu içəridə azca boşluqla göstərir */
+    border-radius: 999px;
+    background-color: #ffffff;   /* loqolar üçün ağ fon */
+    padding: 2px;
 }
 
 .nav-social-label {
@@ -249,7 +364,7 @@ body {
     pointer-events: auto;
 }
 
-/* Eyni zamanda mouse contact üzərində olanda da açılsın – fallback */
+/* JS işləməsə belə hover ilə açılsın – fallback */
 .contact-wrapper:hover .contact-panel {
     opacity: 1;
     transform: translateY(10px) scale(1);
@@ -282,7 +397,7 @@ body {
     object-fit: contain;
     flex-shrink: 0;
     border-radius: 999px;
-    background-color: #ffffff;  /* 🔵 BURANI DA AĞ ETDİK */
+    background-color: #ffffff;  /* sosial loqolar üçün ağ fon */
     padding: 2px;
 }
 
@@ -334,7 +449,7 @@ body {
     position: relative;
     height: 100vh;
     padding: 0 5vw;
-    padding-top: 64px; /* navbar hündürlüyü */
+    padding-top: 64px;
     display: flex;
     align-items: center;
     overflow: hidden;
@@ -399,6 +514,29 @@ body {
         0 0 0 1px var(--border-glow);
 }
 
+/* typing üçün stil */
+
+.hero-typed {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+        "Liberation Mono", "Courier New", monospace;
+    font-size: 0.95rem;
+    color: #e5e7eb;
+    margin-bottom: 0.5rem;
+    white-space: nowrap;
+    border-right: 2px solid rgba(148, 163, 184, 0.9);
+    padding-right: 3px;
+    animation: hero-caret 0.8s steps(2, start) infinite;
+}
+
+@keyframes hero-caret {
+    0%, 100% {
+        border-color: transparent;
+    }
+    50% {
+        border-color: rgba(148, 163, 184, 0.9);
+    }
+}
+
 .hero-kicker {
     font-size: 0.8rem;
     letter-spacing: 0.25em;
@@ -425,6 +563,12 @@ body {
     font-size: 0.98rem;
     color: #cbd5f5;
     max-width: 480px;
+}
+
+.hero-subtitle--muted {
+    margin-top: 0.6rem;
+    font-size: 0.9rem;
+    color: #9ca3af;
 }
 
 /* FACE BLOB + FOTO */
@@ -496,8 +640,6 @@ body {
     mix-blend-mode: soft-light;
 }
 
-/* “Yarım üz” effekti – soldan bir az qaranlıq */
-
 .hero-face::after {
     background: radial-gradient(
         circle at 120% 50%,
@@ -519,8 +661,6 @@ body {
     border: 1px solid rgba(148, 163, 184, 0.6);
     background-color: rgba(15, 23, 42, 0.75);
 }
-
-/* İkinci slaydda üz bir az daha sağda */
 
 .hero-face--shifted {
     transform: translateX(40px);
@@ -556,12 +696,319 @@ body {
     opacity: 0.7;
 }
 
-/* Burda səndə kiçik typo var idi, düzəltdim */
 .hero-dot.active,
 .hero-dot:hover {
     color: #e5e7eb;
     border-color: rgba(59, 130, 246, 0.9);
     box-shadow: 0 0 15px rgba(59, 130, 246, 0.7);
+}
+
+/* ABOUT SECTION */
+
+.about {
+    position: relative;
+    padding: 96px 5vw 80px;
+    background: radial-gradient(circle at top, rgba(15, 23, 42, 0.96), #020617);
+    scroll-margin-top: 80px; /* navbar anchor üçün */
+}
+
+.about-inner {
+    max-width: 880px;
+    margin: 0 auto;
+    border-radius: var(--radius-xl);
+    border: 1px solid rgba(148, 163, 184, 0.4);
+    background:
+        radial-gradient(circle at top left, rgba(59, 130, 246, 0.16), transparent 55%),
+        var(--glass);
+    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.9);
+    padding: 1.8rem 1.9rem;
+}
+
+.about-kicker {
+    font-size: 0.75rem;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--accent-soft);
+    margin-bottom: 0.6rem;
+}
+
+.about-title {
+    font-size: 1.85rem;
+    margin-bottom: 0.8rem;
+}
+
+.about-body {
+    font-size: 0.96rem;
+    color: #e5e7eb;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+}
+
+.about-pills {
+    margin-top: 1.1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.about-pill {
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: 999px;
+    padding: 0.25rem 0.7rem;
+    border: 1px solid rgba(148, 163, 184, 0.45);
+    background: rgba(15, 23, 42, 0.85);
+    color: #cbd5f5;
+}
+
+/* =========================
+   GITHUB SECTION
+========================= */
+
+.github {
+    position: relative;
+    padding: 90px 5vw 80px;
+    background: radial-gradient(circle at top, rgba(15, 23, 42, 0.96), #020617);
+    scroll-margin-top: 80px;
+}
+
+.github-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    border-radius: var(--radius-xl);
+    border: 1px solid rgba(148, 163, 184, 0.45);
+    background:
+        radial-gradient(circle at top left, rgba(59, 130, 246, 0.18), transparent 55%),
+        var(--glass);
+    box-shadow: 0 22px 55px rgba(15, 23, 42, 0.9);
+    padding: 1.9rem 2.1rem;
+}
+
+.github-header {
+    margin-bottom: 1.6rem;
+}
+
+.github-kicker {
+    font-size: 0.75rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--accent-soft);
+    margin-bottom: 0.4rem;
+}
+
+.github-title {
+    font-size: 1.9rem;
+    margin-bottom: 0.4rem;
+}
+
+.github-subtitle {
+    font-size: 0.95rem;
+    color: #cbd5f5;
+    max-width: 620px;
+}
+
+.github-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.1fr);
+    gap: 1.8rem;
+    align-items: flex-start;
+}
+
+.github-block-title {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: #e5e7eb;
+    margin-bottom: 0.4rem;
+}
+
+.github-small {
+    font-size: 0.8rem;
+    color: var(--accent-soft);
+    margin-bottom: 0.7rem;
+}
+
+/* Contributions image */
+
+.github-contrib-frame {
+    border-radius: 18px;
+    padding: 0.9rem;
+    background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.9), #020617);
+    border: 1px solid rgba(148, 163, 184, 0.4);
+    box-shadow:
+        0 14px 35px rgba(15, 23, 42, 0.9),
+        0 0 0 1px rgba(15, 23, 42, 0.9);
+    overflow: hidden;
+}
+
+.github-contrib-img {
+    width: 100%;
+    max-width: 100%;
+    display: block;
+}
+
+/* Repo list */
+
+.github-repo-list {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.75rem;
+}
+
+.github-repo-card {
+    display: block;
+    border-radius: 16px;
+    padding: 0.85rem 0.95rem;
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid rgba(148, 163, 184, 0.45);
+    text-decoration: none;
+    color: #e5e7eb;
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.18s ease,
+        border-color 0.18s ease,
+        background 0.18s ease;
+}
+
+.github-repo-card:hover {
+    transform: translateY(-1px);
+    border-color: rgba(59, 130, 246, 0.9);
+    box-shadow: 0 14px 30px rgba(15, 23, 42, 0.9),
+        0 0 18px rgba(59, 130, 246, 0.65);
+    background: radial-gradient(circle at top left,
+        rgba(37, 99, 235, 0.35),
+        rgba(15, 23, 42, 0.98));
+}
+
+.github-repo-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.github-repo-desc {
+    font-size: 0.82rem;
+    color: #cbd5f5;
+    margin-bottom: 0.4rem;
+}
+
+.github-repo-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-size: 0.76rem;
+    color: #9ca3af;
+}
+
+.github-repo-meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.github-repo-skeleton,
+.github-repo-error {
+    font-size: 0.82rem;
+    color: #9ca3af;
+}
+
+/* =========================
+   EXPERIENCE STRIP
+========================= */
+
+.experience {
+    position: relative;
+    padding: 60px 5vw 90px;
+    background: radial-gradient(circle at bottom, rgba(15, 23, 42, 0.97), #020617);
+}
+
+.experience-inner {
+    max-width: 1024px;
+    margin: 0 auto;
+}
+
+.experience-kicker {
+    font-size: 0.75rem;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--accent-soft);
+    margin-bottom: 0.6rem;
+}
+
+.experience-title {
+    font-size: 1.7rem;
+    margin-bottom: 1.2rem;
+}
+
+.experience-marquee {
+    position: relative;
+    overflow: hidden;
+    padding: 0.6rem 0;
+}
+
+.experience-track {
+    display: flex;
+    align-items: stretch;
+    gap: 1rem;
+    width: max-content;
+    animation: experience-scroll 22s linear infinite;
+}
+
+.experience-card {
+    min-width: 220px;
+    max-width: 260px;
+    padding: 0.85rem 0.95rem;
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 184, 0.5);
+    background:
+        radial-gradient(circle at top left, rgba(59, 130, 246, 0.18), transparent 60%),
+        rgba(15, 23, 42, 0.92);
+    box-shadow: 0 12px 35px rgba(15, 23, 42, 0.85);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    backdrop-filter: blur(14px);
+}
+
+.experience-logo-wrap {
+    width: 44px;
+    height: 44px;
+    border-radius: 999px;
+    background: radial-gradient(circle at 30% 20%, #ffffff, #dbeafe);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow:
+        0 0 10px rgba(59, 130, 246, 0.7),
+        0 0 16px rgba(15, 23, 42, 0.9);
+}
+
+.experience-logo {
+    max-width: 32px;
+    max-height: 32px;
+    object-fit: contain;
+}
+
+.experience-name {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #e5e7eb;
+}
+
+/* Hover edəndə hərəkət dayansın */
+.experience-marquee:hover .experience-track {
+    animation-play-state: paused;
+}
+
+@keyframes experience-scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
 }
 
 /* RESPONSIVE */
@@ -572,7 +1019,7 @@ body {
     }
 
     .navbar-links {
-        display: none; /* istəsən sonra mobil menyu edərik */
+        display: none;
     }
 
     .hero-slide {
@@ -597,6 +1044,22 @@ body {
         left: 50%;
         right: auto;
         transform: translateX(-50%);
+    }
+
+    .about-inner {
+        padding: 1.4rem 1.3rem;
+    }
+
+    .github-inner {
+        padding: 1.5rem 1.4rem;
+    }
+
+    .github-layout {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .experience-card {
+        min-width: 200px;
     }
 }
 
