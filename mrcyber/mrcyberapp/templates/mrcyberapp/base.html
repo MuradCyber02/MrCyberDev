@@ -1,4 +1,4 @@
-{% load static %}
+{% load static %} 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,20 +19,34 @@
         <nav class="navbar-links">
             <a href="{% url 'home' %}" class="nav-link active">Home</a>
             <a href="{% url 'home' %}#about" class="nav-link">About</a>
+            <a href="{% url 'home' %}#github" class="nav-link">GitHub</a>
+            <a href="{% url 'home' %}#experience" class="nav-link">Experience</a>
         </nav>
 
         <div class="navbar-actions">
             <!-- GitHub -->
-            <button class="nav-social" type="button" aria-label="GitHub">
+            <a
+                href="https://github.com/MuradCyber02"
+                class="nav-social"
+                aria-label="GitHub"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
                 <img src="{% static 'mrcyberapp/img/githubb.png' %}" alt="GitHub" class="nav-social-icon">
                 <span class="nav-social-label">GitHub</span>
-            </button>
+            </a>
 
             <!-- LinkedIn -->
-            <button class="nav-social" type="button" aria-label="LinkedIn">
+            <a
+                href="https://www.linkedin.com/"
+                class="nav-social"
+                aria-label="LinkedIn"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
                 <img src="{% static 'mrcyberapp/img/linkedinn.png' %}" alt="LinkedIn" class="nav-social-icon">
                 <span class="nav-social-label">LinkedIn</span>
-            </button>
+            </a>
 
             <!-- Download CV -->
             <a
@@ -50,20 +64,41 @@
                 </button>
 
                 <div class="contact-panel">
-                    <button class="contact-row contact-row--ig" type="button" aria-label="Instagram">
+                    <!-- Instagram -->
+                    <a
+                        href="https://www.instagram.com/YOUR_INSTAGRAM_HANDLE/"
+                        class="contact-row contact-row--ig"
+                        aria-label="Instagram"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
                         <img src="{% static 'mrcyberapp/img/instagramm.png' %}" alt="Instagram" class="contact-row-icon">
                         <span class="contact-row-label">Instagram</span>
-                    </button>
+                    </a>
 
-                    <button class="contact-row contact-row--tt" type="button" aria-label="TikTok">
+                    <!-- TikTok -->
+                    <a
+                        href="https://www.tiktok.com/@YOUR_TIKTOK_HANDLE"
+                        class="contact-row contact-row--tt"
+                        aria-label="TikTok"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
                         <img src="{% static 'mrcyberapp/img/tiktokk.png' %}" alt="TikTok" class="contact-row-icon">
                         <span class="contact-row-label">TikTok</span>
-                    </button>
+                    </a>
 
-                    <button class="contact-row contact-row--tg" type="button" aria-label="Telegram">
+                    <!-- Telegram -->
+                    <a
+                        href="https://t.me/YOUR_TELEGRAM_USERNAME"
+                        class="contact-row contact-row--tg"
+                        aria-label="Telegram"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
                         <img src="{% static 'mrcyberapp/img/telegramm.png' %}" alt="Telegram" class="contact-row-icon">
                         <span class="contact-row-label">Telegram</span>
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>

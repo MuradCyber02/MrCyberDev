@@ -106,6 +106,16 @@ document.addEventListener("DOMContentLoaded", () => {
        GITHUB REPOS – son repolar
     ========================== */
     initGithubRepos();
+
+    /* =========================
+       GITHUB LANGUAGES – stack cədvəli üçün
+    ========================== */
+    initGithubLanguages();
+
+    /* =========================
+       FOOTER – dinamik il
+    ========================== */
+    initFooterYear();
 });
 
 /* =======================================
@@ -163,4 +173,120 @@ function initGithubRepos() {
             listEl.innerHTML =
                 '<p class="github-repo-error">Couldn’t load GitHub activity right now.</p>';
         });
+}
+
+/* =======================================
+   GitHub API – language usage snapshot
+   Stack cədvəlini dinamik doldurur
+======================================= */
+
+function initGithubLanguages() {
+    const bars = document.querySelectorAll(".stack-bar[data-lang]");
+    if (!bars.length) return; // stack bölümün yoxdursa, çıx
+
+    const USERNAME = "MuradCyber02";
+
+    fetch(`https://api.github.com/users/${USERNAME}/repos?per_page=50&sort=updated`)
+        .then((res) => {
+            if (!res.ok) throw new Error("GitHub API error (repos)");
+            return res.json();
+        })
+        .then((repos) => {
+            if (!Array.isArray(repos) || !repos.length) {
+                throw new Error("No repos for language stats");
+            }
+
+            const langTotals = {};
+            const languageFetches = [];
+
+            repos.forEach((repo) => {
+                // Fork-ları saymaya da bilərik
+                if (!repo || repo.fork || !repo.languages_url) return;
+
+                const p = fetch(repo.languages_url)
+                    .then((r) => {
+                        if (!r.ok) throw new Error("GitHub API error (languages)");
+                        return r.json();
+                    })
+                    .then((langs) => {
+                        Object.entries(langs).forEach(([lang, bytes]) => {
+                            langTotals[lang] = (langTotals[lang] || 0) + bytes;
+                        });
+                    })
+                    .catch(() => {
+                        // tək repo səhvi ümumi prosesi pozmasın
+                    });
+
+                languageFetches.push(p);
+            });
+
+            if (!languageFetches.length) {
+                throw new Error("No language URLs to fetch");
+            }
+
+            return Promise.all(languageFetches).then(() => langTotals);
+        })
+        .then((langTotals) => {
+            const totals = Object.values(langTotals);
+            const totalBytes = totals.reduce((acc, v) => acc + v, 0);
+
+            if (!totalBytes) {
+                throw new Error("Empty language totals");
+            }
+
+            const sumLang = (names) =>
+                names.reduce((acc, name) => acc + (langTotals[name] || 0), 0);
+
+            // GitHub dillərini sənin cədvəldəki kateqoriyalara map edirik
+            const mapping = {
+                html: sumLang(["HTML"]),
+                css: sumLang(["CSS"]),
+                js: sumLang(["JavaScript", "TypeScript"]),
+                java: sumLang(["Java"]),
+                c: sumLang(["C", "C++", "C#", "Objective-C"]),
+                cloud: sumLang(["Shell", "HCL", "Dockerfile"]),
+                data: sumLang(["Python", "Jupyter Notebook", "R", "SQL"])
+            };
+
+            Object.entries(mapping).forEach(([key, value]) => {
+                const percent = value ? Math.round((value / totalBytes) * 100) : 0;
+
+                const bar = document.querySelector(`.stack-bar[data-lang="${key}"]`);
+                const note = document.querySelector(
+                    `.stack-activity-note[data-lang-note="${key}"]`
+                );
+
+                if (bar) {
+                    bar.style.setProperty("--level", percent);
+                }
+
+                if (note) {
+                    if (percent > 0) {
+                        note.textContent = `${percent}% of public code by bytes in this area.`;
+                    } else {
+                        note.textContent =
+                            "Not prominent in public repos yet – mostly used in private or future work.";
+                    }
+                }
+            });
+        })
+        .catch((err) => {
+            console.error("GitHub languages load error:", err);
+            const notes = document.querySelectorAll(".stack-activity-note");
+            notes.forEach((note) => {
+                if (note.textContent.includes("Syncing")) {
+                    note.textContent = "Couldn’t sync language stats from GitHub right now.";
+                }
+            });
+        });
+}
+
+/* =======================================
+   FOOTER – dinamik il
+======================================= */
+
+function initFooterYear() {
+    const yearSpan = document.getElementById("footer-year");
+    if (!yearSpan) return;
+    yearSpan.textContent = new Date().getFullYear();
 }
