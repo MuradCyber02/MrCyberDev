@@ -16,6 +16,7 @@ googleapis-common-protos==1.70.0
 grpcio==1.74.0
 grpcio-status==1.74.0
 gunicorn==23.0.0
+gunicorn
 idna==3.10
 kiwisolver==1.4.8
 matplotlib==3.10.3
